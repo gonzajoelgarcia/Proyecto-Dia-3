@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap" rel="stylesheet">
+    <title>Preguntrucho</title>
+</head>
+
+<body onload="iniciarContador()">
+    <h1>PREGUNTRUCHOS</h1>
+    <h2 class="contador" id="contador">Cuenta Regresiva <br> 00:00:30</h2>
+    <p>1. ¿El apodo del equipo de fútbol argentino Racing Club es "La Academia"?</p>
+    <input class="input" id="respuesta1" type="text">
+    <p>2. ¿El Club Atlético San Lorenzo de Almagro ha ganado la Copa Libertadores en al menos una ocasión?</p>
+    <input class="input" id="respuesta2" type="text">
+    <p>3. ¿El estadio del Club Atlético Vélez Sarsfield se llama El Monumental?</p>
+    <input class="input" id="respuesta3" type="text">
+    <p>4. ¿El equipo de fútbol argentino Estudiantes de La Plata ha ganado la Copa Intercontinental en al menos una
+        ocasión?</p>
+    <input class="input" id="respuesta4" type="text">
+    <p>5. ¿El superclásico del fútbol argentino enfrenta a Boca Juniors contra River Plate?</p>
+    <input class="input" id="respuesta5" type="text">
+    <br><br>
+    <button class="boton1" onclick="enviar()">Enviar</button>
+    <button class="boton2" onclick="reiniciar()">Reiniciar</button>
+
+    <audio id="audioFinal">
+        <source src="" type="audio/mpeg">Sonido no habilitado
+    </audio>
+</body>
+
+<script>
+    let tiempo;
+    let contador;
+    function iniciarContador() {
+        tiempo = 30;
+        contador = setInterval(function () {
+            let horas = Math.floor(tiempo / 3600);
+            let minutos = Math.floor((tiempo % 3600) / 60);
+            let segundos = tiempo % 60;
+            let formatoTiempo =
+                (horas < 10 ? "0" : "") + horas + ":" +
+                (minutos < 10 ? "0" : "") + minutos + ":" +
+                (segundos < 10 ? "0" : "") + segundos;
+            document.getElementById("contador").innerText = formatoTiempo;
+            tiempo--;
+            if (tiempo < 0) {
+                clearInterval(contador);
+                alert("¡Game over! Vuelve a intentarlo.");
+            }
+        }, 1000);
+    }
+
+    function enviar() {
+        clearTimeout(tiempo);
+        clearInterval(contador);
+
+        let fecha = new Date();
+        let respuesta1 = document.getElementById("respuesta1").value;
+        let respuesta2 = document.getElementById("respuesta2").value;
+        let respuesta3 = document.getElementById("respuesta3").value;
+        let respuesta4 = document.getElementById("respuesta4").value;
+        let respuesta5 = document.getElementById("respuesta5").value;
+
+        let mensaje = fecha.toLocaleDateString("es-Es") + "\n" +
+            "1. " + respuesta1 + "\n" +
+            "2. " + respuesta2 + "\n" +
+            "3. " + respuesta3 + "\n" +
+            "4. " + respuesta4 + "\n" +
+            "5. " + respuesta5;
+        alert(mensaje);
+    }
+
+    function reiniciar() {
+        location.reload();
+    }
+
+    iniciarContador();
+</script>
+
+</html>
